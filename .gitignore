@@ -26,3 +26,9 @@ network-security.data
 prelude-cheatsheet.el
 prelude-cheatsheet.aux
 prelude-cheatsheet.log
+
+## personal files
+org/*.el
+abbrev_defs
+ac-comphist.dat
+transient

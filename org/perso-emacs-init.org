@@ -1,0 +1,39 @@
+* Title Bar and Icon
+
+Set the same text for the title bar and icon.
+I am not sure that the icon is used in Fedora with Gnome 3.
+#+BEGIN_SRC emacs-lisp
+  (setq frame-title-format (list "" invocation-name " " emacs-version " - "
+  '(:eval
+    (if
+        (buffer-file-name)
+        (abbreviate-file-name
+         (buffer-file-name))
+      "%b")) " @ " system-name))
+
+ (setq icon-title-format frame-title-format)
+#+END_SRC
+
+* Personal info
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Arnaud Malapert")
+(setq user-mail-address "arnaud.malapert@univ-cotedazur.fr")
+#+END_SRC
+
+* Backup files
+Stop creating those backup\~ and #autosave# files.
+
+#+BEGIN_SRC emacs-lisp
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+#+END_SRC
+
+* Keybindings
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c h w") 'whitespace-mode)
+(global-set-key (kbd "C-c h l") 'visual-line-mode)
+#+END_SRC
+
+* Références
+
+- [[http://gewhere.github.io/orgmode-emacs-init-file][aucotsi's blog : how to setup your Emacs init file using orgmode]]
