@@ -1,3 +1,9 @@
+* Personal Info
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Arnaud Malapert")
+(setq user-mail-address "arnaud.malapert@univ-cotedazur.fr")
+#+END_SRC
+
 * Title Bar and Icon
 
 Set the same text for the title bar and icon.
@@ -14,26 +20,69 @@ I am not sure that the icon is used in Fedora with Gnome 3.
  (setq icon-title-format frame-title-format)
 #+END_SRC
 
-* Personal info
-#+BEGIN_SRC emacs-lisp
-(setq user-full-name "Arnaud Malapert")
-(setq user-mail-address "arnaud.malapert@univ-cotedazur.fr")
-#+END_SRC
-
-* Backup files
-Stop creating those backup\~ and #autosave# files.
-
+* Backup Files
+Let stop creating those backup\~ and #autosave# files.
+We also instruct Emacs to silently delete the older backups.
 #+BEGIN_SRC emacs-lisp
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+
+(setq delete-old-versions t)
+#+END_SRC
+
+* Display Images and Archives
+#+BEGIN_SRC emacs-lisp
+(setq auto-image-file-mode t)
+(setq auto-compression-mode t)
+#+END_SRC
+* French Spacing
+  It is not necessary that sentence and colon ends are followed by a double space.
+#+BEGIN_SRC emacs-lisp
+(setq sentence-end-double-space nil)
+(setq colon-double-space nil)
+#+END_SRC
+
+* Display the menubar
+  Otherwise, you can only use the mini-buffer in Fedora.
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode t)
+#+END_SRC
+
+* Quick Questions
+Make all yes-or-no questions as y-or-n, and disable all dialog boxes.
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-dialog-box nil)
+#+END_SRC
+
+* Parenthesis
+I want to to see the matching parenthesis (if any ;) and to close automatically parenthesis.
+#+BEGIN_SRC emacs-lisp
+(show-paren-mode)
+
+(defun insert-parentheses () "insert parentheses and go between them"
+  (interactive)
+  (insert "()")
+  (backward-char 1))
+(defun insert-brackets () "insert brackets and go between them" (interactive)
+  (insert "[]")
+  (backward-char 1))
+(defun insert-braces () "insert curly braces and go between them" (interactive)
+  (insert "{}")
+  (backward-char 1))
+
+(global-set-key "(" 'insert-parentheses) ;; inserts "()"
+(global-set-key "[" 'insert-brackets)
+(global-set-key "{" 'insert-braces)
 #+END_SRC
 
 * Keybindings
+
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c h w") 'whitespace-mode)
 (global-set-key (kbd "C-c h l") 'visual-line-mode)
+
 #+END_SRC
 
 * Références
-
 - [[http://gewhere.github.io/orgmode-emacs-init-file][aucotsi's blog : how to setup your Emacs init file using orgmode]]
