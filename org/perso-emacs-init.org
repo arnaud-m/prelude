@@ -55,7 +55,8 @@ Make all yes-or-no questions as y-or-n, and disable all dialog boxes.
 (setq use-dialog-box nil)
 #+END_SRC
 
-* Parenthesis
+* TODO Parenthesis : remove ; replaced by smartparens
+
 I want to to see the matching parenthesis (if any ;) and to close automatically parenthesis.
 #+BEGIN_SRC emacs-lisp
 (show-paren-mode)
