@@ -1,7 +1,10 @@
 * Personal Info
-#+BEGIN_SRC emacs-lisp
-(setq user-full-name "Arnaud Malapert")
-(setq user-mail-address "arnaud.malapert@univ-cotedazur.fr")
+
+My personal information are stored in the file ~personal/emacs-personal.el~ that is not versioned.
+It simply contains the two following instructions.
+#+BEGIN_SRC emacs-lisp :tangle no
+(setq user-full-name "Foo Bar")
+(setq user-mail-address "foo@bar.com")
 #+END_SRC
 
 * Title Bar and Icon

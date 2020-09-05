@@ -29,6 +29,7 @@ prelude-cheatsheet.log
 
 ## personal files
 org/*.el
+personal/emacs-personal.el
 abbrev_defs
 ac-comphist.dat
 transient
