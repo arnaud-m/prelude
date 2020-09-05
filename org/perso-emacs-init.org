@@ -55,26 +55,16 @@ Make all yes-or-no questions as y-or-n, and disable all dialog boxes.
 (setq use-dialog-box nil)
 #+END_SRC
 
-* TODO Parenthesis : remove ; replaced by smartparens
-
-I want to to see the matching parenthesis (if any ;) and to close automatically parenthesis.
+* Rainbow delimiters
 #+BEGIN_SRC emacs-lisp
-(show-paren-mode)
-
-(defun insert-parentheses () "insert parentheses and go between them"
-  (interactive)
-  (insert "()")
-  (backward-char 1))
-(defun insert-brackets () "insert brackets and go between them" (interactive)
-  (insert "[]")
-  (backward-char 1))
-(defun insert-braces () "insert curly braces and go between them" (interactive)
-  (insert "{}")
-  (backward-char 1))
-
-(global-set-key "(" 'insert-parentheses) ;; inserts "()"
-(global-set-key "[" 'insert-brackets)
-(global-set-key "{" 'insert-braces)
+(prelude-require-package 'rainbow-delimiters)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+#+END_SRC
+Note that I did not succeed to enable it by default with LaTeX.
+* Disable guru mode
+The warning attracts the eyes and I want to use arrows when it fits me.
+#+BEGIN_SRC emacs-lisp
+(setq prelude-guru nil)
 #+END_SRC
 
 * Keybindings
