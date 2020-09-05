@@ -1,0 +1,183 @@
+* LaTeX with AUCTeX
+** Global AUCTeX variables
+ #+BEGIN_SRC emacs-lisp
+(setq TeX-auto-save nil)
+ #+END_SRC
+** Change Section Definition
+
+ #+BEGIN_SRC emacs-lisp
+(setq LaTeX-section-hook
+      '(LaTeX-section-heading
+	LaTeX-section-title
+	LaTeX-section-toc
+	LaTeX-section-section
+	LaTeX-section-label))
+ #+END_SRC
+** Set LaTeX hook
+ #+BEGIN_SRC emacs-lisp
+(add-hook 'LaTeX-mode-hook
+	  '(lambda ()
+	     (turn-off-auto-fill-mode)
+             (setq TeX-command-default "LaTexMk")
+             (setq LaTeX-math-mode t)
+	     (define-key LaTeX-mode-map [f6] 'reftex-toc)
+	     (define-key LaTeX-mode-map [f7] 'reftex-reference)
+	      (LaTeX-add-environments
+	       '("lstlisting" LaTeX-env-label)
+	       '("compactitem" LaTeX-env-label)
+	       '("compactdesc" LaTeX-env-label)
+	       '("compactenum" LaTeX-env-label)
+	       '("inparaenum" LaTeX-env-label)
+	       '("theorem" LaTeX-env-label)
+	       '("definition" LaTeX-env-label)
+	       '("proposition" LaTeX-env-label)
+	       '("remark" LaTeX-env-label)
+	       )
+	      )
+	  )
+ #+END_SRC
+** LaTexMk
+In many situations, you have to run LaTeX more than once.
+To avoid all this hassle, I simply use Latexmk!
+
+ #+BEGIN_SRC emacs-lisp
+(prelude-require-package 'auctex-latexmk)
+(auctex-latexmk-setup)
+
+(setq TeX-command-default "LaTexMk")
+ #+END_SRC
+
+** Ispell Configuration
+We configure ispell to skip additional environments.
+
+ #+BEGIN_SRC emacs-lisp
+(require 'ispell)
+(eval-after-load "ispell"
+  '(setq ispell-tex-skip-alists
+         (list
+          (append
+           (car ispell-tex-skip-alists)
+           '(("\\\\cite[pt]"         ispell-tex-arg-end) ;natbib ;; Remove '\\\\cite' from the list
+             ("\\\\nocite"           ispell-tex-arg-end)
+             ("\\\\includegraphics"  ispell-tex-arg-end)
+             ("\\\\author"           ispell-tex-arg-end)
+             ("\\\\ref"              ispell-tex-arg-end)
+             ("\\\\eqref"            ispell-tex-arg-end)
+             ("\\\\label"            ispell-tex-arg-end)
+             ("\\\\bibliography"     ispell-tex-arg-end)
+             ("\\\\bibliographystyle"            ispell-tex-arg-end)
+             ("\\\\pgfimage"         ispell-tex-arg-end) ;beamer
+             ("\\\\lstset"           ispell-tex-arg-end) ;listings package
+             ("\\\\authorrunning"    ispell-tex-arg-end) ;lncs style
+             ("\\\\tocauthor"        ispell-tex-arg-end) ;lncs style
+             ("\\\\institute"        ispell-tex-arg-end) ;lncs style
+             ;; delimited with \begin.  In ispell: displaymath, eqnarray, eqnarray*,
+  	     ;; equation, minipage, picture, tabular, tabular* (ispell)
+  	     ;;("\\(figure\\|table\\)\\*?"  ispell-tex-arg-end 0)
+  	     ;;("list"                      ispell-tex-arg-end 2)
+  	     ;;("lstlisting\\*?"  . "\\\\end[ \t\n]*{[ \t\n]*lstlisting\\*?[ \t\n]*}") ;listings package
+  	     ;; ("equation\\*?". "\\\\end[ \t\n]*{[ \t\n]*equation\\*?[ \t\n]*}")
+  	     ;; ("eqnarray\\*?". "\\\\end[ \t\n]*{[ \t\n]*eqnarray\\*?[ \t\n]*}")
+  	     ;; ("align\\*?". "\\\\end[ \t\n]*{[ \t\n]*align\\*?[ \t\n]*}")
+  	     ;; ("Verbatim\\*?"    . "\\\\end[ \t\n]*{[ \t\n]*Verbatim\\*?[ \t\n]*}") ; fancyvrb package
+  	     ;; ("verbatim\\*?"    . "\\\\end[ \t\n]*{[ \t\n]*verbatim\\*?[ \t\n]*}") ;
+  	     ;;("procedure\\*?". "\\\\end[ \t\n]*{[ \t\n]*procedure\\*?[ \t\n]*}") ;algorithm2e package
+  	     ;;("function\\*?". "\\\\end[ \t\n]*{[ \t\n]*function\\*?[ \t\n]*}") ;algorithm2e package
+  	     ))
+  	  (cadr ispell-tex-skip-alists)))
+)
+ #+END_SRC
+
+** Write Good !
+I have used diction and a local diction.el mode for a long time.
+
+Here, I am giving a try yo the [[http://bnbeckwith.com/code/writegood-mode.html][WriteGood mode]], because it is hosted by melpa.
+I am not defining a hook because I will launch it by myself.
+As, I do not define any keybinding because I do not use it frequently.
+ #+BEGIN_SRC emacs-lisp
+(prelude-require-package 'writegood-mode)
+ #+END_SRC
+
+** Rainbow delimiters
+We need to configure a special hook to activate rainbow delimiters with LaTeX (see [[https://tex.stackexchange.com/a/272399][here]]).
+#+BEGIN_SRC emacs-lisp
+(setq TeX-update-style-hook (append TeX-update-style-hook 'rainbow-delimiters-mode))
+#+END_SRC
+
+** RefTeX Configuration
+RefTex is very useful for managing labels, references, and citations in complex long documents.
+The following lines activate RefTeX and change
+ #+BEGIN_SRC emacs-lisp
+(prelude-require-package 'reftex)
+
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
+(setq reftex-plug-into-AUCTeX t)
+
+(setq reftex-enable-partial-scans t)
+(setq reftex-save-parse-info t)
+(setq reftex-use-multiple-selection-buffers t)
+ #+END_SRC
+
+** Templates
+In this section, a few templates are defined.
+*** TODO New LaTeX Document
+ #+BEGIN_SRC emacs-lisp
+(add-hook 'LaTeX-document-style-hook
+	  '(lambda ()
+	     (previous-line 1)
+	     (insert "\\usepackage[french]{babel}")
+	     (newline 1)
+	     (insert "\\usepackage[utf8]{inputenc}")
+	     (newline 1)
+	     (insert "\\usepackage[T1]{fontenc}")
+	     (newline 1)
+	     (insert "\\usepackage{lmodern}")
+	     (newline 2)
+	     (insert "\\author{}")
+	     (newline 1)
+	     (insert "\\title{}")
+	     (newline 1)
+	     (insert "\\date{\\today}")
+	     (newline 1)
+             (next-line 1)
+	     )
+	  )
+ #+END_SRC
+*** New Beamer Frame
+ #+BEGIN_SRC emacs-lisp
+ (defun my-frame ()
+   "Add a new beamer frame with LaTeX"
+   (interactive)
+   (newline 2)
+   (insert "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+   (newline 1)
+   (insert "\\begin{frame}{")
+   (insert (read-string "Titre :"))
+   (insert "}")
+   (newline 2)
+   (insert "\\end{frame}")
+   (previous-line 1)
+ )
+ #+END_SRC
+*** Split a Beamer Frame into Two Columns
+ #+BEGIN_SRC emacs-lisp
+(defun my-twocolumns ()
+   "Split a beamer frame into two columns"
+   (interactive)
+   (newline 1)
+   (insert "\\begin{columns}[t]")
+   (newline 1)
+   (insert "\\begin{column}{0.48\\textwidth}")
+   (newline 2)
+   (insert "\\end{column}")
+   (newline 1)
+   (insert "\\begin{column}{0.48\\textwidth}")
+   (newline 2)
+   (insert "\\end{column}")
+   (newline 1)
+   (insert "\\end{columns}")
+   (newline 1)
+   (previous-line 5)
+ )
+
+ #+END_SRC
