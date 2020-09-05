@@ -32,3 +32,4 @@ org/*.el
 abbrev_defs
 ac-comphist.dat
 transient
+irony/

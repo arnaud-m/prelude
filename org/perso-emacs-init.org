@@ -42,7 +42,7 @@ We also instruct Emacs to silently delete the older backups.
 (setq colon-double-space nil)
 #+END_SRC
 
-* Display the menubar
+* Display the Menubar
   Otherwise, you can only use the mini-buffer in Fedora.
 #+BEGIN_SRC emacs-lisp
 (menu-bar-mode t)
@@ -55,18 +55,60 @@ Make all yes-or-no questions as y-or-n, and disable all dialog boxes.
 (setq use-dialog-box nil)
 #+END_SRC
 
-* Rainbow delimiters
+* Rainbow Delimiters
 #+BEGIN_SRC emacs-lisp
 (prelude-require-package 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 #+END_SRC
 Note that I did not succeed to enable it by default with LaTeX.
-* Disable guru mode
+* Disable Guru Mode
 The warning attracts the eyes and I want to use arrows when it fits me.
 #+BEGIN_SRC emacs-lisp
 (setq prelude-guru nil)
 #+END_SRC
+* Company Mode
 
+Use documentation popups that appears when idling on a completion candidate.
+#+BEGIN_SRC emacs-lisp
+(prelude-require-package 'company-quickhelp)
+(company-quickhelp-mode)
+#+END_SRC
+
+Make ~M-h~ to display quick help.
+#+BEGIN_SRC emacs-lisp
+(define-key company-active-map (kbd "M-h") 'company-show-doc-buffer)
+#+END_SRC
+
+* Irony (C/C++)
+
+Load required packages.
+#+BEGIN_SRC emacs-lisp
+(prelude-require-package 'irony)
+(prelude-require-package 'company-irony)
+
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+#+END_SRC
+
+Add hooks for C and its variants
+#+BEGIN_SRC emacs-lisp
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+#+END_SRC
+
+Add hook for discovering compile options.
+#+BEGIN_SRC emacs-lisp
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+#+END_SRC
+To use irony with a Makefile project, you must compile it with [[https://github.com/rizsotto/Bear][Bear]].
+: sudo dnf install bear
 * Keybindings
 ** STARTED Visual Mode Switches
 I must still finalize the visual configuration.
