@@ -118,6 +118,11 @@ To use irony with a Makefile project, you must compile it with [[https://github.
  #+BEGIN_SRC emacs-lisp
 (setq whitespace-style '(face empty trailing))
  #+END_SRC
+* Graphviz Mode
+#+BEGIN_SRC emacs-lisp
+(prelude-require-package 'graphviz-dot-mode)
+#+END_SRC
+
 
 * Keybindings
 ** Visual Mode Switches
