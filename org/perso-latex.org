@@ -1,8 +1,11 @@
 * LaTeX with AUCTeX
 ** Global AUCTeX variables
  #+BEGIN_SRC emacs-lisp
-(setq TeX-auto-save nil)
+; (setq TeX-parse-self t)
+; (setq TeX-auto-save t)
+; (setq-default TeX-master t)
  #+END_SRC
+
 ** Change Section Definition
 
  #+BEGIN_SRC emacs-lisp
@@ -108,14 +111,14 @@ We need to configure a special hook to activate rainbow delimiters with LaTeX (s
 RefTex is very useful for managing labels, references, and citations in complex long documents.
 The following lines activate RefTeX and change
  #+BEGIN_SRC emacs-lisp
-(prelude-require-package 'reftex)
+   (prelude-require-package 'reftex)
 
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
-(setq reftex-plug-into-AUCTeX t)
+   (add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
+   (setq reftex-plug-into-AUCTeX t)
 
-(setq reftex-enable-partial-scans t)
-(setq reftex-save-parse-info t)
-(setq reftex-use-multiple-selection-buffers t)
+   (setq reftex-enable-partial-scans t)
+   (setq reftex-save-parse-info t)
+   (setq reftex-use-multiple-selection-buffers t)
  #+END_SRC
 
 ** Templates
