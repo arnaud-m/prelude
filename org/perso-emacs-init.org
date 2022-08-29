@@ -140,6 +140,13 @@ To use irony with a Makefile project, you must compile it with [[https://github.
 (customize-set-variable 'sage-shell:check-ipython-version-on-startup nil)
 #+END_SRC
 
+* ESS Mode
+
+#+BEGIN_SRC emacs-lisp
+(prelude-require-package 'ess)
+#+END_SRC
+
+
 * Keybindings
 ** Visual Mode Switches
   #+BEGIN_SRC emacs-lisp
