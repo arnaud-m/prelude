@@ -123,6 +123,22 @@ To use irony with a Makefile project, you must compile it with [[https://github.
 (prelude-require-package 'graphviz-dot-mode)
 #+END_SRC
 
+* Sagemath Mode
+#+BEGIN_SRC emacs-lisp
+(prelude-require-package 'sage-shell-mode)
+
+;; Run SageMath by M-x run-sage instead of M-x sage-shell:run-sage
+(sage-shell:define-alias)
+
+;; Turn on eldoc-mode in Sage terminal and in Sage source files
+(add-hook 'sage-shell-mode-hook #'eldoc-mode)
+(add-hook 'sage-shell:sage-mode-hook #'eldoc-mode)
+
+(customize-set-variable 'sage-shell:use-prompt-toolkit t)
+(customize-set-variable 'sage-shell:use-simple-prompt nil)
+(customize-set-variable 'sage-shell:set-ipython-version-on-startup nil)
+(customize-set-variable 'sage-shell:check-ipython-version-on-startup nil)
+#+END_SRC
 
 * Keybindings
 ** Visual Mode Switches
