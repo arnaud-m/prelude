@@ -1,0 +1,10 @@
+#+STARTUP: overview
+#+STARTUP: hidestars
+#+COLUMNS: %38ITEM(Details) %7TODO(To Do) %TAGS(Context) 
+#+OPTIONS: tags:t 
+#+OPTIONS: timestamp:t p:t
+#+OPTIONS: todo:t
+#+OPTIONS: TeX:t
+##Do the right thing automatically (MathJax)
+#+OPTIONS: LaTeX:t          
+#+OPTIONS: skip:t @:t ::t |:t ^:t f:t

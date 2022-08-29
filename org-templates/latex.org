@@ -1,0 +1,5 @@
+##+SETUPFILE: ~/.emacs.d/org-templates/base.org
+#+LaTeX_CLASS_OPTIONS: [a4paper,twoside] 
+#+LATEX_HEADER: \usepackage{a4wide}
+#+LATEX_HEADER: \usepackage[pdftex,dvipsnames,usenames]{xcolor}
+#+LATEX_HEADER: \hypersetup{pdftex,colorlinks=true,urlcolor=ForestGreen,citecolor=Blue,linkcolor=BrickRed}

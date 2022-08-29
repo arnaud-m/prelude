@@ -1,0 +1,4 @@
+#+STARTUP: overview hidestars
+#+OPTIONS: tags:t timestamp:t todo:t p:t
+#+OPTIONS: TeX:t LaTeX:t
+#+OPTIONS: skip:t @:t ::t |:t ^:t f:t
