@@ -32,6 +32,7 @@ var/
 .cache/
 .lsp-session*
 gotools/
+eln-cache/
 
 ## personal files
 org/*.el
