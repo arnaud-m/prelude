@@ -1,9 +1,9 @@
 * LaTeX with AUCTeX
 ** Global AUCTeX variables
  #+BEGIN_SRC emacs-lisp
-; (setq TeX-parse-self t)
-; (setq TeX-auto-save t)
-; (setq-default TeX-master t)
+(setq TeX-parse-self t)
+(setq TeX-auto-save nil)
+(setq-default TeX-master t)
  #+END_SRC
 
 ** Change Section Definition
@@ -16,38 +16,43 @@
 	LaTeX-section-section
 	LaTeX-section-label))
  #+END_SRC
+
 ** Set LaTeX hook
  #+BEGIN_SRC emacs-lisp
-(add-hook 'LaTeX-mode-hook
-	  '(lambda ()
-	     (turn-off-auto-fill-mode)
-             (setq TeX-command-default "LaTexMk")
-             (setq LaTeX-math-mode t)
-	     (define-key LaTeX-mode-map [f6] 'reftex-toc)
-	     (define-key LaTeX-mode-map [f7] 'reftex-reference)
-	      (LaTeX-add-environments
-	       '("lstlisting" LaTeX-env-label)
-	       '("compactitem" LaTeX-env-label)
-	       '("compactdesc" LaTeX-env-label)
-	       '("compactenum" LaTeX-env-label)
-	       '("inparaenum" LaTeX-env-label)
-	       '("theorem" LaTeX-env-label)
-	       '("definition" LaTeX-env-label)
-	       '("proposition" LaTeX-env-label)
-	       '("remark" LaTeX-env-label)
-	       )
-	      )
-	  )
+   (add-hook 'LaTeX-mode-hook
+   	  '(lambda ()
+                (setq font-lock-mode t)
+                (setq LaTeX-math-mode t)
+   	     (define-key LaTeX-mode-map [f6] 'reftex-toc)
+   	     (define-key LaTeX-mode-map [f7] 'reftex-reference)
+   	     (LaTeX-add-environments
+   	       '("lstlisting" LaTeX-env-label)
+   	       '("compactitem" LaTeX-env-label)
+   	       '("compactdesc" LaTeX-env-label)
+   	       '("compactenum" LaTeX-env-label)
+   	       '("inparaenum" LaTeX-env-label)
+   	       '("theorem" LaTeX-env-label)
+   	       '("definition" LaTeX-env-label)
+   	       '("proposition" LaTeX-env-label)
+   	       '("remark" LaTeX-env-label)
+   	       )
+   	      )
+   	  )
  #+END_SRC
 ** LaTexMk
 In many situations, you have to run LaTeX more than once.
 To avoid all this hassle, I simply use Latexmk!
 
  #+BEGIN_SRC emacs-lisp
-(prelude-require-package 'auctex-latexmk)
-(auctex-latexmk-setup)
+   (prelude-require-package 'auctex-latexmk)
+   (auctex-latexmk-setup)
 
-(setq TeX-command-default "LaTexMk")
+   (add-hook 'LaTeX-mode-hook
+   	  '(lambda ()
+                (setq TeX-command-default "LatexMk")
+                (setq TeX-command-Show "LatexMk")
+                )
+             )
  #+END_SRC
 
 ** Ispell Configuration
@@ -182,5 +187,4 @@ In this section, a few templates are defined.
    (newline 1)
    (previous-line 5)
  )
-
  #+END_SRC
