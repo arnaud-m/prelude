@@ -147,7 +147,30 @@ To use irony with a Makefile project, you must compile it with [[https://github.
 #+END_SRC
 
 
-* Keybindings
+* YASnippet
+
+Load the package and default snippets
+#+BEGIN_SRC emacs-lisp
+
+  (prelude-require-package 'yasnippet)
+    (yas-global-mode 1)
+
+  (prelude-require-package 'yasnippet-snippets)
+
+  ;; Remove default keybindings
+  (define-key yas-minor-mode-map (kbd "TAB")    nil)
+  (define-key yas-minor-mode-map (kbd "<tab>")  nil)
+
+  ;; define a new key binding for company
+  (define-key yas-minor-mode-map (kbd "C-<tab>") 'company-yasnippet)
+
+  ;; also add the yasnippet backend as the last
+  (eval-after-load 'yasnippet
+    '(add-to-list 'company-backends 'company-yasnippet t))
+#+END_SRC
+
+
+* Global Keybindings
 ** Visual Mode Switches
   #+BEGIN_SRC emacs-lisp
  (global-set-key (kbd "C-c h w") 'whitespace-mode)
